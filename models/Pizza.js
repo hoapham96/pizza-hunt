@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
+
 
 
 const PizzaSchema = new Schema({
@@ -22,11 +24,17 @@ const PizzaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Comment'
       }
-    ]
+    ],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (createdAtVal) => dateFormat(createdAtVal)
+    },
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true
     },
     id: false
   }
